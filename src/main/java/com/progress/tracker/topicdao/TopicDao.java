@@ -1,4 +1,4 @@
-package main.java.com.progress.tracker.topicdao;
+package com.progress.tracker.topicdao;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -15,7 +15,7 @@ public interface TopicDao {
     void closeConnection() throws SQLException;
 
     // Add a new topic
-    void addTopic(Topic topic) throws SQLException;
+    void addTopic(Topic topic) throws TopicNotCreatedException;
 
     // Get a topic by its ID
     Optional<Topic> getTopicById(int id) throws SQLException;

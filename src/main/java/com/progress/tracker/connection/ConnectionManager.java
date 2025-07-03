@@ -1,8 +1,11 @@
-package main.java.com.progress.tracker.connection;
+package com.progress.tracker.connection;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+
+import com.progress.tracker.connection.ConnectionManager;
+
 
 /*
 	MAKE SURE YOU ARE SWITCHING OUT THE USERNAME OR PASSWORD VALUES IF THERE ARE DIFFERENT FOR YOUR SYSTEM.
@@ -15,7 +18,7 @@ public class ConnectionManager
 {
 	
 	// ?serverTimezone=EST5EDT <-- add to end of URL if trouble connecting and on Mac/Linux
-	private static final String URL = "jdbc:mysql://localhost:3306/chef_db";
+	private static final String URL = "jdbc:mysql://localhost:3306/capstone_db";
 	private static final String USERNAME = "root";
 	private static final String PASSWORD = "19Data!Alvarez98"; // change password if needed, Mac/Linux = Root@123  |  Windows = root
 	

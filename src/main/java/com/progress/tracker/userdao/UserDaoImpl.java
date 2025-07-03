@@ -1,4 +1,4 @@
-package main.java.com.progress.tracker.userdao;
+package com.progress.tracker.userdao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import main.java.com.progress.tracker.connection.*;
+import com.progress.tracker.connection.ConnectionManager;
 
 /* User Dao Class */
 
@@ -34,12 +34,36 @@ public class UserDaoImpl implements UserDao
 
     // Core user operations
     @Override
-    public void addUser(User user) throws SQLException
+    public void addUser(User user) throws SQLException, UserNotCreatedException
     {
         String sql = "INSERT INTO User (name, username, password) Values(?, ?, ?)";
         try(PreparedStatement pstmt = connection.prepareStatement(sql))
         {
             //pstmt.setInt(1, user.getuserId());
+            pstmt.setString(1, user.getName());
+            pstmt.setString(2, user.getuserName());
+            pstmt.setString(3, user.getPassword());
+
+            int rowsMade = pstmt.executeUpdate();
+            if(rowsMade == 0)
+            {
+                throw new UserNotCreatedException(user);
+            }
+        }
+        catch(SQLException e)
+        {
+            throw new UserNotCreatedException("SQL error while creating user: " + user);
+        }
+    }
+
+    // Core user operations
+    @Override
+    public void addUserOL(User user) throws SQLException, UserNotCreatedException
+    {
+        String sql = "INSERT INTO User (name, username, password) Values(?, ?, ?)";
+        try(PreparedStatement pstmt = connection.prepareStatement(sql))
+        {
+            pstmt.setInt(1, user.getuserId());
             pstmt.setString(1, user.getName());
             pstmt.setString(2, user.getuserName());
             pstmt.setString(3, user.getPassword());
@@ -72,7 +96,7 @@ public class UserDaoImpl implements UserDao
                 String username = rs.getString("username");
                 String password = rs.getString("password");
 
-                User user = new User(userId, name, username, password);
+                User user = new User(name, username, password);
                 return Optional.of(user);
             }
         }
@@ -91,7 +115,7 @@ public class UserDaoImpl implements UserDao
         try
         {
             String sql = "SELECT * FROM User";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
+            PreparedStatement pstmt = connection.prepareStatement(sql);
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) 

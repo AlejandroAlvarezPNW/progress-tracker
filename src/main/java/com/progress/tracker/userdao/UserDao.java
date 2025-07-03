@@ -1,4 +1,4 @@
-package main.java.com.progress.tracker.userdao;
+package com.progress.tracker.userdao;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -15,8 +15,11 @@ public interface UserDao
     // as well, this method will help with closing the connection
 	public void closeConnection() throws SQLException ;
 
-    //Add User
-    void addUser(User user) throws SQLException;
+    // Add this method to the UserDao interface
+    void addUser(User user) throws SQLException, UserNotCreatedException;
+
+    //Made for using getallUsers() in Main.java
+    void addUserOL(User user) throws SQLException, UserNotCreatedException;
 
     //Get User with Id
     Optional<User>getUserById(int id) throws SQLException;

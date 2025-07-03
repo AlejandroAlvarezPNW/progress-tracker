@@ -1,12 +1,9 @@
-package main.java.com.progress.tracker.trackerdao;
+package com.progress.tracker.trackerdao;
 
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
-import javax.sound.midi.Track;
-
-import main.java.com.progress.tracker.*;
 
 public interface TrackerDao 
 {
@@ -21,7 +18,7 @@ public interface TrackerDao
     Optional<Tracker> getTrackerById(int id) throws SQLException;
     List<Tracker> getAllTrackers() throws SQLException;
     List<Tracker> getTrackersByUserId(int userId) throws SQLException;
-    List<Tracker> gTrackersByTopicId(int topicId) throws SQLException;
+    List<Tracker> getTrackersByTopicId(int topicId) throws SQLException;
 
     //Update
     boolean UpdateTracker(Tracker tracker) throws SQLException;

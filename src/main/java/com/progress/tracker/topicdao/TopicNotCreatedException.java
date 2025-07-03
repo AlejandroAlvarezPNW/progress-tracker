@@ -1,4 +1,4 @@
-package main.java.com.progress.tracker.topicdao;
+package com.progress.tracker.topicdao;
 
 public class TopicNotCreatedException extends Exception 
 {

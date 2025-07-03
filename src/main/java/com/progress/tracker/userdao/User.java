@@ -1,4 +1,4 @@
-package main.java.com.progress.tracker.userdao;
+package com.progress.tracker.userdao;
 
 public class User 
 {
@@ -7,7 +7,7 @@ public class User
     String userName;
     String password;
     
-     public User(int userId, String name, String userName, String password)
+     public User(String name, String userName, String password)
      {
         this.userId = userId;
         this.name = name;
@@ -15,7 +15,15 @@ public class User
         this.password = password;
     }
 
-     //Id Methods.
+   public User(int id, String name2, String userName2, String password2) 
+   {
+      this.userId = id;
+      this.name = name2;
+      this.userName = userName2;
+      this.password = password2;
+   }
+
+   //Id Methods.
    public int getuserId()
    {
       return userId;

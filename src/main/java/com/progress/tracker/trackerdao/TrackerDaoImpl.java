@@ -1,12 +1,9 @@
-package main.java.com.progress.tracker.trackerdao;
+package com.progress.tracker.trackerdao;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import main.java.com.progress.tracker.ConnectionManager;
-import main.java.com.progress.modoel.Tracker;
 
 public class TrackerDaoImpl implements TrackerDao
 {
@@ -15,9 +12,8 @@ public class TrackerDaoImpl implements TrackerDao
     @Override
     public void establishConnection() throws ClassNotFoundException,SQLException
     {
-        if(connection == null)
-        {
-            connection = main.java.com.progress.tracker.connection.ConnectionManager.getConnection();
+        if (connection == null || connection.isClosed()) {
+            connection = com.progress.tracker.connection.ConnectionManager.getConnection();
         }
     }
 
@@ -124,7 +120,7 @@ public class TrackerDaoImpl implements TrackerDao
     }
 
     @Override
-    public boolean updateTracker(Tracker tracker) throws SQLException 
+    public boolean UpdateTracker(Tracker tracker) throws SQLException 
     {
         String sql = "UPDATE tracker SET status = ?, progress = ? WHERE tracker_id = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) 

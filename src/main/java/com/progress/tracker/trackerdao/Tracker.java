@@ -1,4 +1,4 @@
-package main.java.com.progress.tracker.trackerdao;
+package com.progress.tracker.trackerdao;
 
 public class Tracker 
 {
@@ -19,7 +19,7 @@ public class Tracker
     }
 
     //Gettters and Setters
-    public int getTrackId()
+    public int getTrackerId()
     {
         return tracker_id;
     }
@@ -29,7 +29,7 @@ public class Tracker
         this.tracker_id = tracker_id;
     }
 
-    public int getUserById()
+    public int getUserId()
     {
         return user_id;
     }

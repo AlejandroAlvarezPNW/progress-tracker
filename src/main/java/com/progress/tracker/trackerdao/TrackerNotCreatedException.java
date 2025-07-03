@@ -1,6 +1,4 @@
-package main.java.com.progress.tracker.trackerdao;
-
-import main.java.com.progress.tracker.models.Tracker;
+package com.progress.tracker.trackerdao;
 
 public class TrackerNotCreatedException extends Exception 
 {
