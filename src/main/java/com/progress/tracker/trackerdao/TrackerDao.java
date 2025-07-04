@@ -12,7 +12,7 @@ public interface TrackerDao
     void closeConnection() throws SQLException;
 
     //Create
-    void addTracker(Tracker tracker) throws SQLException;
+    void addTracker(Tracker tracker) throws SQLException, TrackerNotCreatedException;
 
     //Read
     Optional<Tracker> getTrackerById(int id) throws SQLException;
@@ -25,5 +25,6 @@ public interface TrackerDao
 
     //Delete
     boolean deleteTracker(int id) throws SQLException;
+
     
 }

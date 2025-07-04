@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.progress.tracker.topicdao.TopicNotCreatedException;
+import com.progress.tracker.userdao.User;
+
 public class TrackerDaoImpl implements TrackerDao
 {
     private Connection connection = null;
@@ -27,7 +30,7 @@ public class TrackerDaoImpl implements TrackerDao
     }
 
     @Override
-    public void addTracker(Tracker tracker) throws SQLException 
+    public void addTracker(Tracker tracker) throws SQLException, TrackerNotCreatedException
     {
         String sql = "INSERT INTO tracker (user_id, topic_id, status, progress) VALUES (?, ?, ?, ?)";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) 
@@ -40,8 +43,13 @@ public class TrackerDaoImpl implements TrackerDao
             int rowsInserted = pstmt.executeUpdate();
             if (rowsInserted == 0) 
             {
-                throw new SQLException("Tracker not inserted: " + tracker);
+                throw new TrackerNotCreatedException("Tracker not inserted: " + tracker);
             }
+            
+        }
+        catch (SQLException e) 
+        {
+            throw new TrackerNotCreatedException("SQL error while creating tracker: " + tracker, e);
         }
     }
 
@@ -66,17 +74,34 @@ public class TrackerDaoImpl implements TrackerDao
     @Override
     public List<Tracker> getAllTrackers() throws SQLException 
     {
-        String sql = "SELECT * FROM tracker";
         List<Tracker> trackers = new ArrayList<>();
 
-        try (PreparedStatement pstmt = connection.prepareStatement(sql);
-             ResultSet rs = pstmt.executeQuery()) 
+        try
         {
-                while (rs.next()) 
-                {
-                Tracker tracker = extractTrackerFromResultSet(rs);
-                trackers.add(tracker);
-                }
+            String sql = "SELECT * FROM Tracker";
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) 
+            {
+                int trackerId = rs.getInt("tracker_id");
+                int userId = rs.getInt("user_id");
+                int topicId = rs.getInt("topic_id");
+                String status = rs.getString("status");
+                String progress = rs.getString("progress");
+
+                Tracker newTracker = new Tracker(trackerId, userId, topicId, status, progress);
+                trackers.add(newTracker);
+            }
+            
+        }
+        catch(SQLException e)
+        {
+            System.out.println("Error fetching users: " + e.getMessage());
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
         }
         return trackers;
     }

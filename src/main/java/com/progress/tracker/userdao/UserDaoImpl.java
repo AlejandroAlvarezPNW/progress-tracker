@@ -96,7 +96,7 @@ public class UserDaoImpl implements UserDao
                 String username = rs.getString("username");
                 String password = rs.getString("password");
 
-                User user = new User(name, username, password);
+                User user = new User(id, name, username, password);
                 return Optional.of(user);
             }
         }
@@ -159,5 +159,31 @@ public class UserDaoImpl implements UserDao
 
         return false;
     }
+
+    //Login method
+    public Optional<User> loginUser(String username, String password) throws SQLException 
+    {
+        String sql = "SELECT * FROM User WHERE username = ? AND password = ?";
     
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) 
+        {
+            pstmt.setString(1, username);
+            pstmt.setString(2, password);
+        
+            ResultSet rs = pstmt.executeQuery();
+        
+            if (rs.next()) 
+            {
+                int userId = rs.getInt("user_id");
+                String name = rs.getString("name");
+                String uname = rs.getString("username");
+                String pass = rs.getString("password");
+
+                User user = new User(userId, name, uname, pass);
+                return Optional.of(user);
+            }
+        }
+        return Optional.empty();
+    }
+
 }

@@ -6,11 +6,19 @@ public class Topic {
     private String type;
     private int totalUnits;
 
-    public Topic(int topicId, String name, String type, int totalUnits) {
+    public Topic(int topicId, String name, String type, int totalUnits) 
+    {
         this.topicId = topicId;
         this.name = name;
         this.type = type;
         this.totalUnits = totalUnits;
+    }
+
+    public Topic(String name, String type, int totalUnits) 
+    {
+      this.name = name;
+      this.type = type;
+      this.totalUnits = totalUnits;
     }
 
     // Getters and setters

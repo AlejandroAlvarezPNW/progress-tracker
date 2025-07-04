@@ -18,6 +18,14 @@ public class Tracker
         this.progress = progress;
     }
 
+    public Tracker(int user_id, int topic_id, String status, String progress)
+    {
+        this.user_id = user_id;
+        this.topic_id = topic_id;
+        this.status = status;
+        this.progress = progress;
+    }
+
     //Gettters and Setters
     public int getTrackerId()
     {
@@ -67,5 +75,13 @@ public class Tracker
     public void setProgress(String progress)
     {
         this.progress = progress;
+    }
+
+    // ToString Method.
+    @Override
+    public String toString()
+    {
+        return "Tracker [tracker_id=" + tracker_id + ", user_id=" + user_id + ", topic_id=" + topic_id
+            + ", status=" + status + ", progress=" + progress + "]";
     }
 }
